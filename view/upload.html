@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<h1 style="text-align:center;">上传文件</h1>
+	<form action="" method="post" enctype="multipart/form-data" style="width: 200px; margin: 0 auto;">
+		<input type="file" name="file" id="" style="margin-bottom: 30px;"><br>
+		<input type="submit" value="上传">
+		<p style="font-size: 12px; color: red;">（最大支持文件的大小：<?php echo $size; ?>）</p>
+		<input type="button" value="返回" onclick="javascript:history.back()"><br>
+	</form>
+</body>
+</html>

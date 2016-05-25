@@ -1,0 +1,90 @@
+<style>
+    h1{text-align: center;}
+    th{background-color: rgb(176, 196, 222);}
+    th,td{padding: 0px 10px;}
+    p{text-align: center;}
+    a{text-decoration: none;color: red;}
+    table{margin:0 auto;}
+    span{color: red;}
+</style>
+
+<script src="./view/js/ajax.js"></script>
+<script type="text/javascript">
+    function send(url, type){
+        if(type == 'parentname'){//用于跳转分区，尽在WIN下有效
+            var txt = prompt('请输入你要进入的磁盘符！（纯字母，不区分大小写，字母的左右不能有任何其它字符，空格都不能有）');
+            if(txt != null){
+                location.href = "index.php?d=" + txt + ':/&a=show&m=index';
+            }
+        }else if(type == 'jump'){//跳转
+             var txt = prompt('输入你要跳转的路径！');
+            if(txt != null){
+                location.href = "index.php?d=" + txt + '&a=show&m=index';
+            }
+        }else if(confirm('确定执行此操作吗？')){
+            if(type == 'delete'){
+                var ajax = new Ajax();
+                ajax.get(url, function(data){
+                    if(data == 1){
+                        alert('删除成功！');
+                        location.reload();
+                    }else{
+                        alert(data);
+                    }
+                });
+            }
+            if(type == 'down' || type == 'setconfig' || type == 'mkfile' || type == 'read' || type == 'upload'){
+                location.href = url;
+            }
+            if(type == 'copy' || type == 'move' || type == 'rename' || type == 'mkdir'){
+                var obj = new Object();
+                obj.rename = '请输入新名称';
+                obj.mkdir = '请输入目录名称';
+                obj.copy = '请输入目标路径';
+                obj.move = '请输入目标路径';
+                var str = prompt(obj[type]);
+                if(str !== null && str === ''){
+                    alert('你没有进行任何的输入，操作取消');
+                }
+                if(str !== null && str !== ''){
+                    url = url + '&n=' + str;
+                    var ajax = new Ajax();
+                    ajax.get(url, function(data){
+                        if(data == 1){
+                            alert('操作成功！');
+                            location.reload();
+                        }else{
+                            alert(data);
+                        }
+                    });
+                }
+            }
+        }
+    }
+</script>
+
+<h1>文件系统</h1>
+<p>当前位置：<span><?php echo $cur_dir;?></span></p>
+<hr/>
+<p>
+	<a href="javascript:<?php echo $this->jsmethod; ?>('<?php echo $url; ?>?d=<?php echo $dirname; ?>&a=upload&m=index', 'upload')" title="在当前目录下，上传一个文件">上传文件</a>
+    |
+	<a href="javascript:<?php echo $this->jsmethod; ?>('<?php echo $url; ?>?d=<?php echo $dirname; ?>&a=mkdir&m=index', 'mkdir')" title="在当前目录下，新建一个新的目录">新建文件夹</a>
+    |
+    <a href="javascript:<?php echo $this->jsmethod; ?>('<?php echo $url; ?>?d=<?php echo $dirname; ?>&a=mkfile&m=index', 'mkfile')" title="在当前目录下，新建一个新的文件">新建文件</a>
+    |
+	<a href="index.php?d=<?php echo $path; ?>&a=show&m=index" title="跳转到文件系统根目录">开始目录</a>
+    |
+	<a href="index.php?d=<?php echo $root; ?>&a=show&m=index" title="跳转到服务器文档根目录">文档根目录</a>
+    |
+    <a href="javascript:<?php echo $this->jsmethod; ?>('<?php echo $url; ?>?d=<?php echo $dirname; ?>&a=setconfig&m=index', 'setconfig')" title="修改文件系统的配置">配置</a>
+    |
+    <a href="javascript:<?php echo $this->jsmethod; ?>(null, 'jump')" title="修改文件系统的配置">跳转</a>
+    |
+    <a href="javascript:location.reload();" title="修改文件系统的配置">刷新</a>
+    |
+    <a href='<?php echo $parent_js;?>' title="返回到上级目录">上级目录</a>
+    |
+    <a href="javascript:history.back();" title="返回到上一个浏览目录">返回</a>
+</p>
+

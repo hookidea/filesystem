@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+    </head>
+    <body>
+    	<h1 style="text-align: center;">修改配置</h1>
+    	<form action="" method="post" style="width: 300px; margin: 0 auto;">
+    		不显示大小：<input type="checkbox" name="no_size" <?php echo NO_SIZE ? 'checked' : ''; ?> id=""><br>
+    		不显示类型：<input type="checkbox" name="no_mime" <?php echo NO_MIME ? 'checked' : ''; ?> id="">　　（仅支持PHP > 5.4）<br>
+    		不显示修改时间：<input type="checkbox" name="no_mtime" <?php echo NO_MTIME ? 'checked' : ''; ?> id=""><br>
+    		不显示创建时间：<input type="checkbox" name="no_ctime" <?php echo NO_CTIME ? 'checked' : ''; ?> id=""><br>
+    		<input type="submit" value="提交">
+    		<input type="button" value="返回" onclick="javascript:history.back();">
+    	</form>
+    </body>
+</html>
